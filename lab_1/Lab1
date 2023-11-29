@@ -1,1 +1,44 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
+namespace ver_1._2
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        
+
+        private void button1_Click(object sender, EventArgs e)
+        {   
+            double d1 = 0;
+            double d2 = 1.15;
+            double rez = 0;
+
+            
+
+            if (double.TryParse(textBox1.Text, out d1))
+            {
+                rez = (d1 - 100) * d2;
+                label1.Text = rez.ToString();
+            }
+            else
+                label3.Text = "Некоректне значення введено в текстове поле.";
+            }   
+
+
+        
+
+        }
+
+        
+    }
