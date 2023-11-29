@@ -1,0 +1,109 @@
+using System.Diagnostics;
+
+namespace ver_1._6
+{
+   class Circle
+   {
+       private double radius;
+       private double centerX, centerY;
+
+       public Circle(double radius, double centerX, double centerY)
+       {
+           this.radius = radius;
+           this.centerX = centerX;
+           this.centerY = centerY;
+       }
+
+       public void InputCoordinates(double vx, double vy, double vz)
+       {
+           radius = vx;
+           centerX = vy;
+           centerY = vz;
+       }
+
+       public double CalculateArea()
+       {
+           double area = Math.PI * Math.Pow(radius, 2);
+           return area;
+       }
+
+      
+   }
+   class Temp
+   {
+       private int a;
+
+       public Temp(int a)
+       {
+           int[] agg = new int[10
+           ];
+           this.a = a;
+       }
+       ~Temp()
+       {
+           Console.WriteLine($"Я {a} запустився");
+       }
+   }   
+
+   class Program
+   {
+       private static void Main()
+       {
+           
+           for (int i = 0; i < 2000; i++)
+           {
+               Console.WriteLine(i);
+               Temp jifd = new Temp(i);
+           }
+           // Lab3();
+           Console.WriteLine($"Over");
+           Console.WriteLine("Please, input circle count:");
+           int count = Convert.ToInt32(Console.ReadLine());
+
+                      long startMemory = Process.GetCurrentProcess().WorkingSet64;
+
+           Circle[] circles = new Circle[count];
+
+           for (int i = 0; i < count; i++)
+           {
+               Console.WriteLine($"Input radius and center coordinates of circle #{i + 1}");
+               Console.Write("Input radius: ");
+               double radius = Convert.ToDouble(Console.ReadLine());
+               Console.Write("Input centerX: ");
+               double centerX = Convert.ToDouble(Console.ReadLine());
+               Console.Write("Input centerY: ");
+               double centerY = Convert.ToDouble(Console.ReadLine());
+
+               circles[i] = new Circle(radius, centerX, centerY);
+           }
+
+                     long endMemory = Process.GetCurrentProcess().WorkingSet64;
+
+           double maxArea = circles[0].CalculateArea();
+           int maxIndex = 0;
+
+           for (int i = 1; i < count; i++)
+           {
+               double area = circles[i].CalculateArea();
+               if (area > maxArea)
+               {
+                   maxArea = area;
+                   maxIndex = i;
+               }
+           }
+
+                      long memoryUsed = endMemory - startMemory;
+          
+           Console.WriteLine($"Circle with max area is #{maxIndex + 1}");
+          
+           Console.WriteLine($"Memory used by the program: {memoryUsed} bytes");
+           for (int i = 0; i < 2000; i++)
+           {
+               Console.WriteLine(i);
+               Temp jifd = new Temp(i);
+           }
+   
+           Console.WriteLine($"Over");
+       }
+   }
+}
