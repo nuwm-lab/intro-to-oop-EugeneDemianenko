@@ -1,0 +1,119 @@
+using System;
+
+class Line
+{
+    protected double a0, a1, a2;
+
+    public Line()
+    {
+        a0 = a1 = a2 = 0;
+    }
+
+    public Line(double a0, double a1, double a2)
+    {
+        this.a0 = a0;
+        this.a1 = a1;
+        this.a2 = a2;
+    }
+
+    public void SetCoefficients(double a0, double a1, double a2)
+    {
+        this.a0 = a0;
+        this.a1 = a1;
+        this.a2 = a2;
+    }
+
+    public void DisplayCoefficients()
+    {
+        Console.WriteLine($"Line coefficients: a0 = {a0}, a1 = {a1}, a2 = {a2}");
+    }
+
+    public bool IsPointOnLine(double x, double y)
+    {
+        return Math.Abs(a1 * x + a2 * y + a0) < 0.0001; // Check if point belongs to the line
+    }
+}
+
+class Hyperplane : Line
+{
+    private double a3, a4;
+
+    public Hyperplane() : base()
+    {
+        a3 = a4 = 0;
+    }
+
+    public Hyperplane(double a0, double a1, double a2, double a3, double a4) : base(a0, a1, a2)
+    {
+        this.a3 = a3;
+        this.a4 = a4;
+    }
+
+    public new void SetCoefficients(double a0, double a1, double a2)
+    {
+        base.SetCoefficients(a0, a1, a2);
+    }
+
+    public void SetCoefficients(double a0, double a1, double a2, double a3, double a4)
+    {
+        base.SetCoefficients(a0, a1, a2);
+        this.a3 = a3;
+        this.a4 = a4;
+    }
+
+    public new void DisplayCoefficients()
+    {
+        base.DisplayCoefficients();
+        Console.WriteLine($"Hyperplane coefficients: a3 = {a3}, a4 = {a4}");
+    }
+
+    public bool IsPointOnHyperplane(double x1, double x2, double x3, double x4)
+    {
+        return Math.Abs(a1 * x1 + a2 * x2 + a3 * x3 + a4 * x4 + a0) < 0.0001; // Check if point belongs to the hyperplane
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Line line = new Line();
+        Hyperplane hyperplane = new Hyperplane();
+
+        Console.WriteLine("Enter coefficients for the Line (a0, a1, a2):");
+        double a0 = Convert.ToDouble(Console.ReadLine());
+        double a1 = Convert.ToDouble(Console.ReadLine());
+        double a2 = Convert.ToDouble(Console.ReadLine());
+
+        line.SetCoefficients(a0, a1, a2);
+
+        Console.WriteLine("Enter coefficients for the Hyperplane (a0, a1, a2, a3, a4):");
+        double h_a0 = Convert.ToDouble(Console.ReadLine());
+        double h_a1 = Convert.ToDouble(Console.ReadLine());
+        double h_a2 = Convert.ToDouble(Console.ReadLine());
+        double h_a3 = Convert.ToDouble(Console.ReadLine());
+        double h_a4 = Convert.ToDouble(Console.ReadLine());
+
+        hyperplane.SetCoefficients(h_a0, h_a1, h_a2, h_a3, h_a4);
+
+        Console.WriteLine("Enter a point to check if it belongs to the Line (x, y):");
+        double x = Convert.ToDouble(Console.ReadLine());
+        double y = Convert.ToDouble(Console.ReadLine());
+
+        if (line.IsPointOnLine(x, y))
+            Console.WriteLine("The point belongs to the Line.");
+        else
+            Console.WriteLine("The point does not belong to the Line.");
+
+        Console.WriteLine("Enter a point to check if it belongs to the Hyperplane (x1, x2, x3, x4):");
+        double x1 = Convert.ToDouble(Console.ReadLine());
+        double x2 = Convert.ToDouble(Console.ReadLine());
+        double x3 = Convert.ToDouble(Console.ReadLine());
+        double x4 = Convert.ToDouble(Console.ReadLine());
+
+        if (hyperplane.IsPointOnHyperplane(x1, x2, x3, x4))
+            Console.WriteLine("The point belongs to the Hyperplane.");
+        else
+            Console.WriteLine("The point does not belong to the Hyperplane.");
+    }
+}
